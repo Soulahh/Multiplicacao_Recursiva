@@ -2,7 +2,24 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <locale.h>
 
+int** alocar_matriz(int tamanho){
+    int l, c;
+    int **matriz = calloc(tamanho, sizeof(int*));
+    if (!matriz){
+        perror("Erro na alocacao de memoria para a matriz!");
+        return NULL;
+    }
+    for(l = 0; l < tamanho; l++){
+        matriz[l] = calloc(tamanho, sizeof(int));
+        if(!matriz[l]){
+            perror("Erro na alocacao de memoria em matriz");
+            return NULL;
+        }        
+    }
+    return matriz;
+}
 void liberar_matriz(int **matriz, int linhas){
     for(int i = 0; i < linhas; i++){
         free(matriz[i]);
@@ -56,13 +73,14 @@ int ler_inteiro_positivo(const char* prompt){
 }
 
 void imprimir_resultado(int** matriz, int linhas, int colunas){
-    printf("Matriz resultante da multiplicacao:\n\n");
+    printf("\nMatriz resultante da multiplicacao:\n\n");
     for (int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            printf("%d ",matriz[i][j]);
+            printf("  %d  ",matriz[i][j]);
         }
         printf("\n");
     }
+    printf("\n\n");
 }
 
 int** multiplicar_matriz(int** A, int** B, int tam){
@@ -124,22 +142,7 @@ int** multiplicar_matriz(int** A, int** B, int tam){
     return C;
 }
 
-int** alocar_matriz(int tamanho){
-    int l, c;
-    int **matriz = calloc(tamanho, sizeof(int*));
-    if (!matriz){
-        perror("Erro na alocacao de memoria para a matriz!");
-        return NULL;
-    }
-    for(l = 0; l < tamanho; l++){
-        matriz[l] = calloc(tamanho, sizeof(int));
-        if(!matriz[l]){
-            perror("Erro na alocacao de memoria em matriz");
-            return NULL;
-        }        
-    }
-    return matriz;
-}
+
 
 int preencher_matriz_user(int** matriz, int linhas, int colunas){
     int l, c;
@@ -172,6 +175,7 @@ int maior_valor(int a, int b, int c, int d){
 
 int main(void){
     srand(time(NULL));
+    setlocale(LC_ALL, "pt_BR.UTF-8");
     int **matriz_a, **matriz_b;
     int linhas_a, colunas_a, linhas_b, colunas_b;
     int l, c;
@@ -182,10 +186,10 @@ int main(void){
     colunas_b = ler_inteiro_positivo("Quantas colunas a matriz B deve possuir? ");
 
     if(colunas_a != linhas_b){
-        printf("\nMultiplicacao somente possivel em matrizes cujo\nnumero de linhas de A e igual ao numero de colunas de B!\n");
+        printf("\nMultiplicacao somente possivel em matrizes cujo número de colunas de A é igual ao número de linhas de B!\n");
         return 1;
     }
-    int escolher_random = ler_inteiro_positivo("Deseja que o aplicativo escolha os valores da matriz aleatoriamente? (1 para SIM, 0 para NÃO): ");
+    int escolher_random = ler_inteiro_positivo("Deseja que o aplicativo escolha os valores da matriz aleatoriamente?\n1 - SIM\n2 - NÃO \n");
     int maior = maior_valor(linhas_a,colunas_a, linhas_b, colunas_b);
     int tam_padding = proxima_potencia_de_2(maior);
     matriz_a = alocar_matriz(tam_padding);
@@ -201,7 +205,7 @@ int main(void){
         preencher_matriz_user(matriz_b, linhas_b, colunas_b);
     }
     int** resultado = multiplicar_matriz(matriz_a,matriz_b,tam_padding);
-    imprimir_resultado(resultado, linhas_b, colunas_a);
+    imprimir_resultado(resultado, linhas_a, colunas_b);
     liberar_matriz(matriz_a,tam_padding);
     liberar_matriz(matriz_b,tam_padding); 
     liberar_matriz(resultado,tam_padding);

@@ -8,13 +8,13 @@ int** alocar_matriz(int tamanho){
     int l, c;
     int **matriz = calloc(tamanho, sizeof(int*));
     if (!matriz){
-        perror("Erro na alocacao de memoria para a matriz!");
+        perror("Erro na alocação de memoria para a matriz!");
         return NULL;
     }
     for(l = 0; l < tamanho; l++){
         matriz[l] = calloc(tamanho, sizeof(int));
         if(!matriz[l]){
-            perror("Erro na alocacao de memoria em matriz");
+            perror("Erro na alocação de memoria em matriz");
             return NULL;
         }        
     }
@@ -64,7 +64,7 @@ int ler_inteiro_positivo(const char* prompt){
     do{
         printf("%s", prompt);
         if (scanf("%d", &valor) != 1 || valor <= 0){
-            printf("Entrada invalida. Tente novamente!\n");
+            printf("Entrada inválida. Tente novamente!\n");
             valor = 0;
         }
         while ((c = getchar()) != '\n' && c != EOF);
@@ -73,7 +73,7 @@ int ler_inteiro_positivo(const char* prompt){
 }
 
 void imprimir_resultado(int** matriz, int linhas, int colunas){
-    printf("\nMatriz resultante da multiplicacao:\n\n");
+    printf("\nMatriz resultante da multiplicação:\n\n");
     for (int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
             printf("  %d  ",matriz[i][j]);
@@ -149,7 +149,7 @@ int preencher_matriz_user(int** matriz, int linhas, int colunas){
     for(l = 0; l < linhas; l++){
         for(c = 0; c < colunas; c++){
             if (scanf("%d", &matriz[l][c]) != 1){
-                perror("Erro na alocacao de memoria em matriz");
+                perror("Erro na alocação de memoria em matriz");
                 return 1;
             }
         }
@@ -186,7 +186,7 @@ int main(void){
     colunas_b = ler_inteiro_positivo("Quantas colunas a matriz B deve possuir? ");
 
     if(colunas_a != linhas_b){
-        printf("\nMultiplicacao somente possivel em matrizes cujo número de colunas de A é igual ao número de linhas de B!\n");
+        printf("\nMultiplicação somente possivel em matrizes cujo número de colunas de A é igual ao número de linhas de B!\n");
         return 1;
     }
     int escolher_random = ler_inteiro_positivo("Deseja que o aplicativo escolha os valores da matriz aleatoriamente?\n1 - SIM\n2 - NÃO \n");

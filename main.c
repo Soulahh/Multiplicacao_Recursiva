@@ -76,7 +76,7 @@ void imprimir_resultado(int** matriz, int linhas, int colunas){
     printf("\nMatriz resultante da multiplicação:\n\n");
     for (int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            printf("  %d  ",matriz[i][j]);
+            printf("     %d",matriz[i][j]);
         }
         printf("\n");
     }
@@ -148,6 +148,7 @@ int preencher_matriz_user(int** matriz, int linhas, int colunas){
     int l, c;
     for(l = 0; l < linhas; l++){
         for(c = 0; c < colunas; c++){
+            printf("Elemento[%d][%d]: \n",l,c);
             if (scanf("%d", &matriz[l][c]) != 1){
                 perror("Erro na alocação de memoria em matriz");
                 return 1;
@@ -197,11 +198,13 @@ int main(void){
     if(matriz_a == NULL || matriz_b == NULL){
         exit(1);
     }
-    if (escolher_random){
+    if (escolher_random == 1){
         preencher_matriz_random(matriz_a, linhas_a, colunas_a);
         preencher_matriz_random(matriz_b, linhas_b, colunas_b);
     } else{
+        printf("\nMatriz A: \n");
         preencher_matriz_user(matriz_a, linhas_a, colunas_a);
+        printf("\nMatriz B: \n");
         preencher_matriz_user(matriz_b, linhas_b, colunas_b);
     }
     int** resultado = multiplicar_matriz(matriz_a,matriz_b,tam_padding);

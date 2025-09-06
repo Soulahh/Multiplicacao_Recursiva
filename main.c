@@ -76,7 +76,7 @@ void imprimir_resultado(int** matriz, int linhas, int colunas){
     printf("\nMatriz resultante da multiplicação:\n\n");
     for (int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            printf("     %d",matriz[i][j]);
+            printf("%5d",matriz[i][j]);
         }
         printf("\n");
     }

@@ -59,15 +59,27 @@ int** somar_matrizes(int** matriz_a, int** matriz_b, int tam){
     return matriz_c;
 }
 
+
+int ler_inteiro(const char* prompt){
+    int valor, c, sucesso;
+    do{
+        printf("%s",prompt);
+        sucesso = scanf("%d", &valor);
+        if(sucesso != 1){
+            printf("Entrada inválida. Tente novamente!\n");
+        }
+        while ((c = getchar()) != '\n' && c != EOF);
+    } while(sucesso != 1);
+    return valor;
+}
+
 int ler_inteiro_positivo(const char* prompt){
     int valor, c;
     do{
-        printf("%s", prompt);
-        if (scanf("%d", &valor) != 1 || valor <= 0){
-            printf("Entrada inválida. Tente novamente!\n");
-            valor = 0;
+        valor = ler_inteiro(prompt);
+        if (valor <= 0){
+            printf("Valor deve ser um inteiro positivo.\n");
         }
-        while ((c = getchar()) != '\n' && c != EOF);
     } while (valor <= 0);
     return valor;
 }
@@ -144,17 +156,15 @@ int** multiplicar_matriz(int** A, int** B, int tam){
 
 
 
-int preencher_matriz_user(int** matriz, int linhas, int colunas){
+void preencher_matriz_user(int** matriz, int linhas, int colunas){
     int l, c;
     for(l = 0; l < linhas; l++){
         for(c = 0; c < colunas; c++){
-            printf("Elemento[%d][%d]: \n",l,c);
-            while (scanf("%d", &matriz[l][c]) != 1){
-                printf("Por favor, insira um valor valido!\n");
-            }
+            printf("\nElemento[%d][%d]: \n",l,c);
+            matriz[l][c] = ler_inteiro("");
+            printf("\nElemento[%d][%d]: %d",l,c,matriz[l][c]);
         }
     }
-    return 0;
 }
 
 int preencher_matriz_random(int** matriz, int linhas, int colunas){
@@ -175,9 +185,10 @@ int maior_valor(int a, int b, int c, int d){
 
 int main(void){
     srand(time(NULL));
-    setlocale(LC_ALL, "pt_BR.UTF-8");
+    setlocale(LC_ALL, "Portuguese");
     int **matriz_a, **matriz_b;
     int linhas_a, colunas_a, linhas_b, colunas_b;
+    int l, c;
 
     linhas_a = ler_inteiro_positivo("Quantas linhas a matriz A deve possuir? ");
     colunas_a = ler_inteiro_positivo("Quantas colunas a matriz A deve possuir? ");

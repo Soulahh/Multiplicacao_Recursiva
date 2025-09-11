@@ -149,9 +149,8 @@ int preencher_matriz_user(int** matriz, int linhas, int colunas){
     for(l = 0; l < linhas; l++){
         for(c = 0; c < colunas; c++){
             printf("Elemento[%d][%d]: \n",l,c);
-            if (scanf("%d", &matriz[l][c]) != 1){
-                perror("Erro na alocação de memoria em matriz");
-                return 1;
+            while (scanf("%d", &matriz[l][c]) != 1){
+                printf("Por favor, insira um valor valido!\n");
             }
         }
     }
@@ -179,7 +178,6 @@ int main(void){
     setlocale(LC_ALL, "pt_BR.UTF-8");
     int **matriz_a, **matriz_b;
     int linhas_a, colunas_a, linhas_b, colunas_b;
-    int l, c;
 
     linhas_a = ler_inteiro_positivo("Quantas linhas a matriz A deve possuir? ");
     colunas_a = ler_inteiro_positivo("Quantas colunas a matriz A deve possuir? ");
